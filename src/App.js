@@ -6,6 +6,7 @@ import FolderSidebar from './FolderSidebar';
 import NoteView from './NoteView';
 import Header from './Header';
 import AddFolder from './AddFolder';
+import AddNote from './AddNote';
 import NotefulContext from './NotefulContext';
 import './App.css';
 
@@ -40,11 +41,17 @@ class App extends Component {
     this.setState({ notes: newNotes });
   };
 
+  addFolder = folderObj => {
+    const newFolders = [...this.state.folders, folderObj];
+    this.setState({ folders: newFolders });
+  };
+
   render() {
     const contextValue = {
       notes: this.state.notes,
       folders: this.state.folders,
-      deleteNote: this.deleteNote
+      deleteNote: this.deleteNote,
+      addFolder: this.addFolder
     };
 
     return (
@@ -120,6 +127,19 @@ class App extends Component {
             <Route
               path="/add-folder"
               component={AddFolder}
+              /*render={props => {
+                return (
+                  <NoteView
+                    note={this.state.notes.find(
+                      e => e.id === props.match.params.noteId
+                    )}
+                  />
+                );
+              }}*/
+            />
+            <Route
+              path="/add-note"
+              component={AddNote}
               /*render={props => {
                 return (
                   <NoteView

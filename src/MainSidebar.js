@@ -19,7 +19,9 @@ export default class MainSidebar extends Component {
 
       return (
         <li className={className} key={folder.id}>
-          <Link to={`/folders/${folder.id}`}>{folder.name}</Link>
+          <Link to={`/folders/${folder.id}`}>
+            {folder.name ? folder.name : folder.id}
+          </Link>
         </li>
       );
     });

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Note from './Note';
 import NotefulContext from './NotefulContext';
 
@@ -23,6 +24,11 @@ export default class MainView extends Component {
   }
 
   render() {
-    return <ul>{this.notesHtml()}</ul>;
+    return (
+      <React.Fragment>
+        <ul>{this.notesHtml()}</ul>
+        <Link to={`/add-note`}>Add Note</Link>
+      </React.Fragment>
+    );
   }
 }

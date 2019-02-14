@@ -99,3 +99,7 @@ li.selected {
   left: 10px;
   bottom: 10px;
 }
+
+.error {
+  color: red;
+}
