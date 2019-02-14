@@ -36,6 +36,12 @@ class App extends Component {
       });
   }
 
+  addNote = noteObj => {
+    const newNotes = [...this.state.notes, noteObj];
+    this.setState({ notes: newNotes});
+  }
+  
+
   deleteNote = noteId => {
     const newNotes = this.state.notes.filter(note => note.id !== noteId);
     this.setState({ notes: newNotes });
@@ -51,7 +57,8 @@ class App extends Component {
       notes: this.state.notes,
       folders: this.state.folders,
       deleteNote: this.deleteNote,
-      addFolder: this.addFolder
+      addFolder: this.addFolder,
+      addNote: this.addNote
     };
 
     return (

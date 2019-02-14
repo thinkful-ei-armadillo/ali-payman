@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NotefulContext from './NotefulContext';
 import { withRouter } from 'react-router-dom';
 
+
 class AddFolder extends Component {
   static contextType = NotefulContext;
 
@@ -19,7 +20,6 @@ class AddFolder extends Component {
     } else {
       this.setState({ valid: false });
     }
-    // validate duplicate folder names
   };
 
   addFolderRequest = (folderName, callback) => {

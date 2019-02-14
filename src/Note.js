@@ -32,6 +32,8 @@ class Note extends Component {
       });
   };
 
+
+
   render() {
     let date = new Date(this.props.date);
     let dateString = date.toDateString();
