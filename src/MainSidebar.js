@@ -25,7 +25,12 @@ export default class MainSidebar extends Component {
     });
   }
   render() {
-    return <ul>{this.foldersHtml()}</ul>;
+    return (
+      <React.Fragment>
+        <ul>{this.foldersHtml()}</ul>
+        <Link to={`/add-folder`}>Add Folder</Link>
+      </React.Fragment>
+    );
   }
 }
 
