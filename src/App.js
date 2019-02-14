@@ -5,6 +5,7 @@ import MainSidebar from './MainSidebar';
 import FolderSidebar from './FolderSidebar';
 import NoteView from './NoteView';
 import Header from './Header';
+import AddFolder from './AddFolder';
 import NotefulContext from './NotefulContext';
 import './App.css';
 
@@ -106,6 +107,19 @@ class App extends Component {
             <Route
               path="/notes/:noteId"
               component={NoteView}
+              /*render={props => {
+                return (
+                  <NoteView
+                    note={this.state.notes.find(
+                      e => e.id === props.match.params.noteId
+                    )}
+                  />
+                );
+              }}*/
+            />
+            <Route
+              path="/add-folder"
+              component={AddFolder}
               /*render={props => {
                 return (
                   <NoteView
