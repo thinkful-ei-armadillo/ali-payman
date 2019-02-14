@@ -15,12 +15,9 @@ class AddNote extends Component {
     validName: false,
     folderId: 1,
     validFolder: false,
-    validationMessages : 'Please type in a valid name',
-    formValid: false,
-
+    validationMessages: 'Please type in a valid name',
+    formValid: false
   };
-
-  
 
   setNoteName = value => {
     this.setState(
@@ -35,23 +32,29 @@ class AddNote extends Component {
     if (name.length !== 0) {
       this.setState({ validName: true });
     } else {
-      this.setState({ validName: false, validationMessages: 'Please type in a valid name' });
+      this.setState({
+        validName: false,
+        validationMessages: 'Please type in a valid name'
+      });
     }
-
   };
 
   setFolder = event => {
     const id = event.target.value;
     const { folders } = this.context;
-    debugger;
-    (folders.find((e) => e.id === id)) ? this.setState({ folderId: event.target.value, validFolder: true }, this.validateForm) : this.setState({ folderId: 1, validFolder: false }) ;
+    folders.find(e => e.id === id)
+      ? this.setState(
+          { folderId: event.target.value, validFolder: true },
+          this.validateForm
+        )
+      : this.setState({ folderId: 1, validFolder: false }, this.validateForm);
   };
 
   validateForm = () => {
     this.setState({
       formValid: this.state.validFolder && this.state.validName
     });
-  }
+  };
 
   generateFolderOptions = () => {
     return this.context.folders.map(folder => {
@@ -63,7 +66,6 @@ class AddNote extends Component {
     });
   };
 
-
   addNoteRequest = (noteName, folderId, content, callback) => {
     let self = this;
     fetch('http://localhost:9090/notes/', {
@@ -72,11 +74,11 @@ class AddNote extends Component {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ 
-        name: noteName, 
+      body: JSON.stringify({
+        name: noteName,
         modified: new Date().toDateString(),
         folderId,
-        content  
+        content
       })
     })
       .then(res => {
@@ -98,7 +100,6 @@ class AddNote extends Component {
       });
   };
 
-
   render() {
     return (
       <React.Fragment>
@@ -114,8 +115,13 @@ class AddNote extends Component {
             );
           }}
           action="submit"
-        > 
-          <label htmlFor="note-name">Name {!this.state.validName && <p className="error">{this.state.validationMessages}</p>}</label>
+        >
+          <label htmlFor="note-name">
+            Name{' '}
+            {!this.state.validName && (
+              <p className="error">{this.state.validationMessages}</p>
+            )}
+          </label>
           <input
             onChange={e => this.setNoteName(e.target.value)}
             name="note-name"
@@ -123,7 +129,7 @@ class AddNote extends Component {
             type="text"
           />
           <label htmlFor="note-content">Content</label>
-          
+
           <textarea type="text" name="note-content" ref={this.contentInput} />
           <select value={this.state.folderId} onChange={this.setFolder}>
             <option key={1} value="1" disabled>
@@ -131,7 +137,7 @@ class AddNote extends Component {
             </option>
             {this.generateFolderOptions()}
           </select>
-          
+
           <button disabled={!this.state.formValid} type="submit">
             Add Note
           </button>

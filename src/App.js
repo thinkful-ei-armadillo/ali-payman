@@ -8,6 +8,7 @@ import Header from './Header';
 import AddFolder from './AddFolder';
 import AddNote from './AddNote';
 import NotefulContext from './NotefulContext';
+import ErrorPage from './ErrorPage';
 import './App.css';
 
 class App extends Component {
@@ -38,9 +39,8 @@ class App extends Component {
 
   addNote = noteObj => {
     const newNotes = [...this.state.notes, noteObj];
-    this.setState({ notes: newNotes});
-  }
-  
+    this.setState({ notes: newNotes });
+  };
 
   deleteNote = noteId => {
     const newNotes = this.state.notes.filter(note => note.id !== noteId);
@@ -60,105 +60,26 @@ class App extends Component {
       addFolder: this.addFolder,
       addNote: this.addNote
     };
-
     return (
       <NotefulContext.Provider value={contextValue}>
-        <main className="App">
-          <Header />
-          <div className="sidebar">
-            <Route
-              exact
-              path="/"
-              component={MainSidebar}
-              //render={() => <MainSidebar folders={this.state.folders} />}
-            />
-            <Route
-              path="/folders/:folderId"
-              component={MainSidebar}
-              /*render={props => (
-                <MainSidebar match={props.match} folders={this.state.folders} />
-              )}*/
-            />
-            <Route
-              path="/notes/:noteId"
-              component={FolderSidebar}
-              /*render={props => (
-                <FolderSidebar
-                  folder={this.state.folders.find(
-                    e =>
-                      e.id ===
-                      this.state.notes.find(
-                        e => e.id === props.match.params.noteId
-                      ).folderId
-                  )}
-                />
-              )}*/
-            />
-          </div>
+        <ErrorPage>
+          <main className="App">
+            <Header />
+            <div className="sidebar">
+              <Route exact path="/" component={MainSidebar} />
+              <Route path="/folders/:folderId" component={MainSidebar} />
+              <Route path="/notes/:noteId" component={FolderSidebar} />
+            </div>
 
-          <div className="main-view">
-            <Route
-              exact
-              path="/"
-              component={MainView}
-              //render={() => <MainView notes={this.state.notes} />}
-            />
-            <Route
-              exact
-              path="/folders/:folderId"
-              component={MainView}
-              /*render={props => {
-                return (
-                  <MainView
-                    match={props.match}
-                    notes={this.state.notes.filter(
-                      note => note.folderId === props.match.params.folderId
-                    )}
-                  />
-                );
-              }}*/
-            />
-            <Route
-              path="/notes/:noteId"
-              component={NoteView}
-              /*render={props => {
-                return (
-                  <NoteView
-                    note={this.state.notes.find(
-                      e => e.id === props.match.params.noteId
-                    )}
-                  />
-                );
-              }}*/
-            />
-            <Route
-              path="/add-folder"
-              component={AddFolder}
-              /*render={props => {
-                return (
-                  <NoteView
-                    note={this.state.notes.find(
-                      e => e.id === props.match.params.noteId
-                    )}
-                  />
-                );
-              }}*/
-            />
-            <Route
-              path="/add-note"
-              component={AddNote}
-              /*render={props => {
-                return (
-                  <NoteView
-                    note={this.state.notes.find(
-                      e => e.id === props.match.params.noteId
-                    )}
-                  />
-                );
-              }}*/
-            />
-          </div>
-        </main>
+            <div className="main-view">
+              <Route exact path="/" component={MainView} />
+              <Route exact path="/folders/:folderId" component={MainView} />
+              <Route path="/notes/:noteId" component={NoteView} />
+              <Route path="/add-folder" component={AddFolder} />
+              <Route path="/add-note" component={AddNote} />
+            </div>
+          </main>
+        </ErrorPage>
       </NotefulContext.Provider>
     );
   }
