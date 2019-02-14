@@ -13,9 +13,13 @@ class AddNote extends Component {
   state = {
     name: '',
     validName: false,
-    folderId: null,
-    validFolder: false
+    folderId: 1,
+    validFolder: false,
+    validationMessages : 'Please type in a valid name'
+
   };
+
+  
 
   setNoteName = value => {
     this.setState(
@@ -30,13 +34,16 @@ class AddNote extends Component {
     if (name.length !== 0) {
       this.setState({ validName: true });
     } else {
-      this.setState({ validName: false });
+      this.setState({ validName: false, validationMessages: 'Please type in a valid name' });
     }
     // validate duplicate folder names
   };
 
   setFolder = event => {
-    this.setState({ folderId: event.target.value });
+    const id = event.target.value;
+    const { folders } = this.context;
+    (folders.find((e) => e.id === id)) ? this.setState({ folderId: event.target.value, validFolder: true }) : this.setState({ folderId: 1, validFolder: false }) ;
+
   };
 
   generateFolderOptions = () => {
@@ -60,7 +67,7 @@ class AddNote extends Component {
           }}
           action="submit"
         >
-          <label htmlFor="note-name">Name</label>
+          <label htmlFor="note-name">Name {!this.state.validName && <p className="error">{this.state.validationMessages}</p>}</label>
           <input
             onChange={e => this.setNoteName(e.target.value)}
             name="note-name"
@@ -68,14 +75,15 @@ class AddNote extends Component {
             type="text"
           />
           <label htmlFor="note-content">Content</label>
+          
           <textarea type="text" name="note-content" ref={this.contentInput} />
-          <select value={1} onChange={this.setFolder}>
+          <select value={this.state.folderId} onChange={this.setFolder}>
             <option key={1} value="1" disabled>
               Select A Folder
             </option>
             {this.generateFolderOptions()}
           </select>
-
+          
           <button disabled={!this.state.valid} type="submit">
             Add Note
           </button>

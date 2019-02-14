@@ -23,7 +23,6 @@ class AddFolder extends Component {
   };
 
   addFolderRequest = (folderName, callback) => {
-    debugger;
     let self = this;
     fetch('http://localhost:9090/folders/', {
       method: 'POST',
