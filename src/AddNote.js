@@ -63,7 +63,6 @@ class AddNote extends Component {
     });
   };
 
-  //Begginning of Ali
 
   addNoteRequest = (noteName, folderId, content, callback) => {
     let self = this;
